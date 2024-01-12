@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>week2</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/reset-css/reset.css">
+  <link rel="stylesheet" href="css/all.min.css">
+</head>
+<body>
+  <div id="app">
+    <div class="container d-flex">
+      <div class="productList w-50 p-4">
+        <h1 class="fw-bold h1 mb-4">產品列表</h1>
+        <table class="table">
+          <thead>
+            <tr class="border-bottom">
+              <th scope="col" class="fw-bold">產品名稱</th>
+              <th scope="col" class="fw-bold">原價</th>
+              <th scope="col" class="fw-bold">售價</th>
+              <th scope="col" class="fw-bold">是否啟用</th>
+              <th scope="col" class="fw-bold">查看細節</th>
+            </tr>
+          </thead>
+          <tbody v-for="item in products" :key="item.id">
+            <tr class="border-bottom">
+              <td>{{item.title}}</td>
+              <td>{{item.origin_price}}</td>
+              <td>{{item.price}}</td>
+              <td :class="item.is_enabled?'text-success':'text-danger'">{{item.is_enabled?'啟用':'停用'}}</td>
+              <td><button type="button" class="btn btn-primary" @click.prevent="getProduct(item.id)">查看細節</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>目前有{{products.length}}項產品</p>
+      </div>
+      <div class="detailList w-50 p-4">
+        <h2 class="fw-bold h1">單一產品細節</h2>
+          <p class="text-muted" v-if="isChosenHint">請選擇一個商品查看</p>
+        <template v-else>
+          <div class="border rounded-3 p-3 mb-4">
+            <div class="d-flex justify-content-center">
+            <img :src="detail.imageUrl" alt="" class="product-pic mb-2">
+            </div>
+            <div class="d-flex align-items-center mb-3">
+            <h2 v-model="detail.title" class="fw-bold h4 mb-0 me-2">
+            {{detail.title}}
+            </h2>
+            <span class="badge bg-primary fs-6">{{detail.category}}</span>
+            </div>
+            <div class="mb-3 d-flex">
+              <p class="flex-shrink-0">商品描述：</p>
+              <span>{{detail. description}}</span>
+            </div>
+            <p class="mb-3">商品內容：{{detail. content}}</p>
+            <p>
+              {{detail.price}}
+              <span class="text-decoration-line-through text-muted">    
+              {{detail. origin_price}}
+              </span>
+              元/個
+            </p>
+            
+          </div>
+        <div class="more-pic d-flex">
+          <img :src="item" alt="" class="more-pic" v-for="item in detail.imagesUrl">
+        </template>
+        </div>
+      </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+  <script src="all.js"></script>
+</body>
+</html>
