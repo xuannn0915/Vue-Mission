@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>week2</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../node_modules/reset-css/reset.css">
+  <link rel="stylesheet" href="css/all.min.css">
+</head>
+<body>
+  <main id="app">
+    <div class="container pt-5">
+      <div class="row">
+        <div class="col-3 mx-auto">
+          <h1 class="fw-bold h2 mb-4 text-center">請先登入</h1>
+          <form action="#">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" v-model="username">
+              <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="password">
+              <label for="floatingPassword">Password</label>
+            </div>
+            <button type="button" class="btn btn-primary w-100" @click="login">
+              登入
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
