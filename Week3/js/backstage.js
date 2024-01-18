@@ -3,12 +3,18 @@ const url = 'https://ec-course-api.hexschool.io/v2';
 const api_path='xuan02';
 
 const app = {
+  // 資料
   data() {
     return {
       products: [],
       isChosenHint:true,
+      tempProduct: {
+        imagesUrl: [],
+      },
     };
   },
+
+  // 方法
   methods: {
     renderProducts(){
       axios.get(`${url}/api/${api_path}/admin/products`)
@@ -23,8 +29,33 @@ const app = {
       const addProduct = document.querySelector('#addProduct');
       const addProductModal = new bootstrap.Modal(addProduct);
       addProductModal.show();
+    },
+    saveNewProduct(){
+      const title =document.querySelector('#title').value;
+      const category =document.querySelector('#category').value;
+      const unit =document.querySelector('#unit').value;
+      const originPrice =document.querySelector('#originPrice').value;
+      const salePrice =document.querySelector('#salePrice').value;
+      const describe =document.querySelector('#describe').value;
+      const content =document.querySelector('#content').value;
+      const isEnable =document.querySelector('#isEnable').value;
+
+      if(title==''||category==''||unit==''||originPrice==''){
+        
+      }
+      
     }      
   },
+
+  computed:{
+
+  },
+
+  watch:{
+
+  },
+
+  // 初始化
   mounted() {
     const token = document.cookie.replace(
       /(?:(?:^|.*;\s*)xuanToken\s*\=\s*([^;]*).*$)|^.*$/,
