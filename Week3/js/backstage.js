@@ -41,6 +41,7 @@ const app = {
       const description = document.querySelector("#description").value;
       const content = document.querySelector("#content").value;
       const is_enabled = Number(document.querySelector("#is_enabled").value);
+      const imageUrl = Number(document.querySelector("#imageUrl").value);
 
       this.tempProduct = {
         title,
@@ -51,7 +52,7 @@ const app = {
         description,
         content,
         is_enabled,
-        imageUrl: "",
+        imageUrl,
         imagesUrl: [],
       };
       axios

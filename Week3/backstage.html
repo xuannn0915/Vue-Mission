@@ -80,7 +80,18 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="mb-3">
-                      <label for="mainPic" class="form-label">主要圖片</label>
+                      <label for="imageUrl" class="form-label">主要圖片</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="imageUrl"
+                        placeholder="請輸入圖片連結"
+                      />
+                      <img :src="tempProduct.imageUrl"/>
+                    </div>
+                    <div class="h5 fw-bold mb-3">多圖新增</div>
+                    <div class="mb-3">
+                      <label for="morePic" class="form-label">圖片網址</label>
                       <input
                         type="text"
                         class="form-control"
@@ -89,7 +100,6 @@
                       />
                       <img src="" alt="" />
                     </div>
-                    <div class="h5 fw-bold mb-3">多圖新增</div>
                     <button class="btn btn-outline-primary w-100" type="button">
                       新增圖片
                     </button>
@@ -170,7 +180,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
               <div class="modal-footer">
                 <button
