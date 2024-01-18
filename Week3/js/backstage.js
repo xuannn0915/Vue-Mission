@@ -1,13 +1,14 @@
 // 產品資料格式
 const url = "https://ec-course-api.hexschool.io/v2";
 const api_path = "xuan02";
+let myModal = "";
 
 const app = {
   // 資料
   data() {
     return {
       products: [],
-      isChosenHint: true,
+      isChosenHint: false,
       tempProduct: {
         imagesUrl: [],
       },
@@ -26,35 +27,21 @@ const app = {
           console.log(err.response);
         });
     },
-    addProductModal() {
-      const addProduct = document.querySelector("#addProduct");
-      const addProductModal = new bootstrap.Modal(addProduct);
-      addProductModal.show();
-    },
-    closeProductModal() {
-      const addProduct = document.querySelector("#addProduct");
-      const addProductModal = new bootstrap.Modal(addProduct);
-      addProductModal.hide();
+    closeModal() {
+      myModal.hide();
     },
     saveNewProduct() {
       const title = document.querySelector("#title").value;
       const category = document.querySelector("#category").value;
       const unit = document.querySelector("#unit").value;
-      const origin_price = Number(document.querySelector("#origin_price").value);
+      const origin_price = Number(
+        document.querySelector("#origin_price").value
+      );
       const price = Number(document.querySelector("#price").value);
       const description = document.querySelector("#description").value;
       const content = document.querySelector("#content").value;
       const is_enabled = Number(document.querySelector("#is_enabled").value);
 
-      // if (
-      //   title == "" ||
-      //   category == "" ||
-      //   unit == "" ||
-      //   (origin_price == "") | (price == "")
-      // ) {
-      //   alert("所有欄位為必填，請完整輸入內容！");
-      //   return;
-      // }
       this.tempProduct = {
         title,
         category,
@@ -64,38 +51,45 @@ const app = {
         description,
         content,
         is_enabled,
+        imageUrl: "",
+        imagesUrl: [],
       };
-      console.log(this.tempProduct);
-      // axios
-      //   .post(`${url}/api/${api_path}/admin/product`, this.tempProduct)
-      //   .then((res) => {
-      //     this.closeProductModal();
-      //     this.renderProducts();
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.response);
-      //   });
+      axios
+        .post(`${url}/api/${api_path}/admin/product`, {
+          data: this.tempProduct,
+        })
+        .then((res) => {
+          alert(res.data.message);
+          this.closeModal();
+          this.renderProducts();
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
     },
   },
 
-  computed: {
-  },
+  computed: {},
 
   watch: {},
 
   // 初始化
   mounted() {
+    // token帶入header做驗證
     const token = document.cookie.replace(
       /(?:(?:^|.*;\s*)xuanToken\s*\=\s*([^;]*).*$)|^.*$/,
       "$1"
     );
     axios.defaults.headers.common["Authorization"] = token;
 
+    // modal初始化才能抓到dom元素
+    myModal = new bootstrap.Modal(document.getElementById("modal"));
+
+    // 確認身份
     axios
       .post(`${url}/api/user/check`)
       .then((res) => {
         this.renderProducts();
-        this.addProductModal();
       })
       .catch((err) => {
         alert(err.response.data.message);

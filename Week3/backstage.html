@@ -19,7 +19,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              @click="addProductModal"
+              data-bs-toggle="modal" data-bs-target="#modal"
             >
               建立新的產品
             </button>
@@ -68,7 +68,7 @@
         <div
           class="modal fade"
           tabindex="-1"
-          id="addProduct"
+          id="modal"
           data-bs-backdrop="static"
         >
           <div class="modal-dialog modal-xl">
@@ -163,7 +163,7 @@
                     </div>
                     <div class="mb-3">
                       <div class="form-check">
-                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" value="">
+                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" v-model="isChosenHint" :value="isChosenHint ? 1:0">
                         <label class="form-check-label" for="is_enabled" class="align-top">
                           是否啟用
                         </label>
