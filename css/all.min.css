@@ -1,0 +1,38 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.h1,
+.h2,
+.h3,
+span,
+ul,
+li,
+ol,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  max-width: 100%;
+}
+
+table td:nth-child(n+3) {
+  width: 120px;
+}
+table td:nth-child(6) {
+  width: 200px;
+}
+
+tbody tr {
+  border-bottom: 1px solid darkgray;
+}
+
+thead tr {
+  border-bottom: 1px solid black;
+}/*# sourceMappingURL=all.min.css.map */

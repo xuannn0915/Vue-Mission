@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>week3</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/node_modules/reset-css/reset.css">
-  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="/css/all.min.css">
 </head>
 <body>
   <div id="app">
@@ -27,11 +28,11 @@
             </tr>
           </thead>
           <tbody v-for="item in products" :key="item.id">
-            <tr class="border-bottom">
-              <td style="width:120px">{{item.category}}</td>
-              <td >{{item.title}}</td>
-              <td style="width:120px">{{item.origin_price}}</td>
-              <td style="width:120px">{{item.price}}</td>
+            <tr>
+              <td>{{item.category}}</td>
+              <td>{{item.title}}</td>
+              <td>{{item.origin_price}}</td>
+              <td>{{item.price}}</td>
               <td :class="item.is_enabled?'text-success':'text-danger'">{{item.is_enabled?'啟用':'停用'}}</td>
               <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
@@ -81,6 +82,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
-  <script src="backstage.js"></script>
+  <script src="./js/backstage.js"></script>
 </body>
 </html>
