@@ -44,12 +44,18 @@ const app = {
 
     // 開啟modal
     openModal(status, item){
+
       // 先判斷狀態是「新增／編輯」，在帶入選擇的物件
       if(status=='new'){
         this.tempProduct={
           imagesUrl: [],
         };
         this.isNew=true;
+        myModal.show();
+      }
+      else if(status=='edit'){
+        this.tempProduct={...item};
+        this.isNew=false;
         myModal.show();
       }
     },

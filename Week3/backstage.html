@@ -50,7 +50,7 @@
                     role="group"
                     aria-label="Basic example"
                   >
-                    <button type="button" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" @click="openModal('edit',item)">
                       編輯
                     </button>
                     <button type="button" class="btn btn-outline-danger">
@@ -87,6 +87,7 @@
                         class="form-control"
                         id="imageUrl"
                         placeholder="請輸入圖片連結"
+                        v-model="tempProduct.imageUrl"
                       />
                       <img :src="tempProduct.imageUrl"/>
                     </div>
@@ -112,7 +113,8 @@
                         type="text"
                         class="form-control"
                         id="title"
-                        placeholder="請輸入標題" 
+                        placeholder="請輸入標題"
+                        v-model="tempProduct.title" 
                       />
                     </div>
                     <div class="row">
@@ -124,6 +126,7 @@
                             class="form-control"
                             id="category"
                             placeholder="請輸入分類"
+                            v-model="tempProduct.category"
                           />
                         </div>
                       </div>
@@ -135,6 +138,7 @@
                             class="form-control"
                             id="unit"
                             placeholder="請輸入單位"
+                            v-model="tempProduct.unit"
                           />
                         </div>
                       </div>
@@ -148,6 +152,7 @@
                             class="form-control"
                             id="origin_price"
                             placeholder="請輸入原價"
+                            v-model.number="tempProduct.origin_price"
                           />
                         </div>
                       </div>
@@ -159,6 +164,7 @@
                             class="form-control"
                             id="price"
                             placeholder="請輸入售價"
+                            v-model.number="tempProduct.price"
                           />
                         </div>
                       </div>
@@ -166,17 +172,17 @@
                     <hr>
                     <div class="mb-3">
                       <label for="description" class="form-label">產品描述</label>
-                      <textarea class="form-control" id="description" rows="2" placeholder="請輸入產品描述"></textarea>
+                      <textarea class="form-control" id="description" rows="2" placeholder="請輸入產品描述" v-model="tempProduct.description"></textarea>
                     </div>
                     <div class="mb-3">
                       <label for="content" class="form-label">說明內容</label>
-                      <textarea class="form-control" id="content" rows="2" placeholder="請輸入說明內容"></textarea>
+                      <textarea class="form-control" id="content" rows="2" placeholder="請輸入說明內容" v-model="tempProduct.content"></textarea>
                     </div>
                     <div class="mb-3">
                       <div class="form-check">
-                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" v-model="isChosenHint" :value="isChosenHint ? 1:0">
+                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled">
                         <label class="form-check-label" for="is_enabled" class="align-top">
-                          是否啟用
+                          是否啟用{{tempProduct.is_enabled}}
                         </label>
                       </div>
                     </div>
