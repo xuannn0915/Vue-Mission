@@ -44,35 +44,42 @@ const app = {
 
     // 開啟modal
     openModal(status, item){
-
       // 先判斷狀態是「新增／編輯」，在帶入選擇的物件
       if(status=='new'){
         this.tempProduct={
           imagesUrl: [],
         };
         this.isNew=true;
-        myModal.show();
+        productModal.show();
       }
       else if(status=='edit'){
         this.tempProduct={...item};
         this.isNew=false;
-        myModal.show();
+        productModal.show();
+      }
+      else if(status == 'delete'){
+        this.tempProduct = {...item};
+        this.isNew =false;
+        deleteModal.show()
       }
     },
 
-    saveNewProduct() {
-      axios
-        .post(`${url}/api/${api_path}/admin/product`, {
-          data: this.tempProduct,
-        })
-        .then((res) => {
-          alert(res.data.message);
-          this.closeModal();
-          this.renderProducts();
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
+    // 確認後執行的動作(儲存／修改)
+    saveProduct() {
+      if(this.isNew == true){
+        axios
+          .post(`${url}/api/${api_path}/admin/product`, {
+            data: this.tempProduct,
+          })
+          .then((res) => {
+            alert(res.data.message);
+            this.renderProducts();
+            productModal.hide();
+          })
+          .catch((err) => {
+            alert(err.response.data.message);
+          });
+      }
     },
   },
 
@@ -86,8 +93,9 @@ const app = {
     axios.defaults.headers.common["Authorization"] = token;
 
     // modal初始化才能抓到dom元素
-    myModal = new bootstrap.Modal(document.getElementById("modal"));
-
+    productModal = new bootstrap.Modal(document.getElementById("addModal"));
+    deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+    
     // 確認身份
     this.checkUser()
   },
