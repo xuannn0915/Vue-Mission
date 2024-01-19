@@ -8,7 +8,7 @@ const app = {
   data() {
     return {
       products: [],
-      isChosenHint: false,
+      isNew:false,
       tempProduct: {
         imagesUrl: [],
       },
@@ -17,6 +17,20 @@ const app = {
 
   // 方法
   methods: {
+    // 確認使用者權限
+    checkUser() {
+      axios
+        .post(`${url}/api/user/check`)
+        .then((res) => {
+          this.renderProducts();
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+          window.location = "index.html";
+        });
+    },
+
+    // 渲染列表
     renderProducts() {
       axios
         .get(`${url}/api/${api_path}/admin/products`)
@@ -27,34 +41,8 @@ const app = {
           console.log(err.response);
         });
     },
-    closeModal() {
-      myModal.hide();
-    },
-    saveNewProduct() {
-      const title = document.querySelector("#title").value;
-      const category = document.querySelector("#category").value;
-      const unit = document.querySelector("#unit").value;
-      const origin_price = Number(
-        document.querySelector("#origin_price").value
-      );
-      const price = Number(document.querySelector("#price").value);
-      const description = document.querySelector("#description").value;
-      const content = document.querySelector("#content").value;
-      const is_enabled = Number(document.querySelector("#is_enabled").value);
-      const imageUrl = Number(document.querySelector("#imageUrl").value);
 
-      this.tempProduct = {
-        title,
-        category,
-        unit,
-        origin_price,
-        price,
-        description,
-        content,
-        is_enabled,
-        imageUrl,
-        imagesUrl: [],
-      };
+    saveNewProduct() {
       axios
         .post(`${url}/api/${api_path}/admin/product`, {
           data: this.tempProduct,
@@ -70,10 +58,6 @@ const app = {
     },
   },
 
-  computed: {},
-
-  watch: {},
-
   // 初始化
   mounted() {
     // token帶入header做驗證
@@ -87,16 +71,9 @@ const app = {
     myModal = new bootstrap.Modal(document.getElementById("modal"));
 
     // 確認身份
-    axios
-      .post(`${url}/api/user/check`)
-      .then((res) => {
-        this.renderProducts();
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-        window.location = "index.html";
-      });
+    this.checkUser()
   },
+
 };
 
 Vue.createApp(app).mount("#app");
