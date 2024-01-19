@@ -92,15 +92,16 @@
                       <img :src="tempProduct.imageUrl"/>
                     </div>
                     <div class="h5 fw-bold mb-3">多圖新增</div>
-                    <div class="mb-3">
+                    <div class="mb-3" v-for="pic in tempProduct.imagesUrl">
                       <label for="morePic" class="form-label">圖片網址</label>
                       <input
                         type="text"
                         class="form-control"
                         id="mainPic"
                         placeholder="請輸入圖片連結"
+                        v-model="pic"
                       />
-                      <img src="" alt="" />
+                      <img :src="pic" />
                     </div>
                     <button class="btn btn-outline-primary w-100" type="button">
                       新增圖片
@@ -180,9 +181,9 @@
                     </div>
                     <div class="mb-3">
                       <div class="form-check">
-                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled">
+                        <input class="form-check-input  align-middle" type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled"  :true-value="1" :false-value="0">
                         <label class="form-check-label" for="is_enabled" class="align-top">
-                          是否啟用{{tempProduct.is_enabled}}
+                          是否啟用
                         </label>
                       </div>
                     </div>
