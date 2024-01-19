@@ -19,7 +19,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              data-bs-toggle="modal" data-bs-target="#modal"
+              @click="openModal('new')"
             >
               建立新的產品
             </button>
@@ -64,7 +64,7 @@
           <p>目前有{{products.length}}項產品</p>
         </div>
 
-        <!-- addNewProductModal -->
+        <!-- ProductModal -->
         <div
           class="modal fade"
           tabindex="-1"
@@ -74,7 +74,8 @@
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white h4 fw-bold">新增產品</h5>
+                <h5 class="modal-title text-white h4 fw-bold" v-if="isNew">新增產品</h5>
+                <h5 class="modal-title text-white h4 fw-bold" v-else>編輯產品</h5>
               </div>
               <div class="modal-body">
                 <div class="row">
