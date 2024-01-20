@@ -106,6 +106,12 @@ const app = {
             console.log(err.response);
           });
     },
+
+    // 新增更多圖片
+    createImages(){
+      this.tempProduct.imagesUrl=[];
+      this.tempProduct.imagesUrl.push('')
+    }
   },
 
   // 初始化

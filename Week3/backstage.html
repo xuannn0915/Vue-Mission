@@ -93,6 +93,8 @@
                     <img :src="tempProduct.imageUrl"/>
                   </div>
                   <div class="h5 fw-bold mb-3">多圖新增</div>
+                  <!-- 當新增modal時若「未新增更多圖片」imagesUrl為空陣列時，post後的imagesUrl為undefined，因此下方新增欄位則不顯示 -->
+                  <div v-if="this.tempProduct.imagesUrl">
                     <div class="mb-3" v-for="(pic, key) in tempProduct.imagesUrl" :key="pic">
                       <label :for="`morePic${key}`" class="form-label">圖片網址</label>
                       <input
@@ -115,6 +117,11 @@
                     <button class="btn btn-outline-danger w-100" type="button" v-else @click="tempProduct.imagesUrl.pop()">
                       刪除圖片
                     </button>
+                  </div>
+                  <!-- 當新增modal時若「未新增更多圖片」imagesUrl為空陣列時，post後的imagesUrl不存在，因此顯示下方新增按鈕 -->
+                  <button class="btn btn-outline-primary w-100" type="button" @click="createImages" v-else>
+                    新增圖片
+                  </button>
                 </div>
                 <div class="col-md-8">
                   <div class="mb-3">
