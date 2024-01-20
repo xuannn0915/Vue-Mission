@@ -93,17 +93,22 @@
                     <img :src="tempProduct.imageUrl"/>
                   </div>
                   <div class="h5 fw-bold mb-3">多圖新增</div>
-                    <div class="mb-3" v-for="(pic, index) in tempProduct.imagesUrl" :key="pic">
-                      <label for="morePic" class="form-label">圖片網址</label>
+                    <div class="mb-3" v-for="(pic, key) in tempProduct.imagesUrl" :key="pic">
+                      <label :for="`morePic${key}`" class="form-label">圖片網址</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="mainPic"
+                        :id="`morePic${key}`"
                         placeholder="請輸入圖片連結"
-                        v-model="tempProduct.imagesUrl[index]"
+                        v-model="tempProduct.imagesUrl[key]"
                       />
                       <img :src="pic" />
                     </div>
+                    <!-- 
+                      判斷條件：當「無更多相片」或「最後一個內容有值」出現新增按鈕
+                      1.無更多相片： 當imagesUrl的長度為0時為false，因此前方使用！反轉為true。 
+                      2.最後一個內容有值：用陣列長-1取出最後一個內容，當為空值時為false，有內容時為真值故為true。
+                    -->
                     <button class="btn btn-outline-primary w-100" type="button" @click="tempProduct.imagesUrl.push('')" v-if="!tempProduct.imagesUrl.length || tempProduct.imagesUrl[tempProduct.imagesUrl.length-1] ">
                       新增圖片
                     </button>
