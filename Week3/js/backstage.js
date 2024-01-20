@@ -104,7 +104,15 @@ const app = {
           .catch((err) => {
             console.log(err.response);
           });
-      }
+    },
+
+    // 新增圖片
+    addImage(){
+      this.tempProduct.imagesUrl.push('');
+    },
+    delImage(){
+      this.tempProduct.imagesUrl.pop();
+    }
   },
 
   // 初始化
@@ -122,6 +130,8 @@ const app = {
 
     // 確認身份
     this.checkUser();
+
+    productModal.show();
   },
 };
 
