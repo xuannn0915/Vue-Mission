@@ -1,7 +1,8 @@
 // 產品資料格式
 const url = "https://ec-course-api.hexschool.io/v2";
 const api_path = "xuan02";
-let myModal = "";
+let productModal = "";
+let deleteModal="";
 
 const app = {
   // 資料
@@ -93,9 +94,9 @@ const app = {
     },
 
     // 刪除
-    delProduct(id){
+    delProduct(){
         axios
-          .delete(`${url}/api/${api_path}/admin/product/${id}`)
+          .delete(`${url}/api/${api_path}/admin/product/${this.tempProduct.id}`)
           .then((res) => {
             alert(res.data.message);
             deleteModal.hide();
@@ -105,14 +106,6 @@ const app = {
             console.log(err.response);
           });
     },
-
-    // 新增圖片
-    addImage(){
-      this.tempProduct.imagesUrl.push('');
-    },
-    delImage(){
-      this.tempProduct.imagesUrl.pop();
-    }
   },
 
   // 初始化
@@ -130,8 +123,6 @@ const app = {
 
     // 確認身份
     this.checkUser();
-
-    productModal.show();
   },
 };
 
