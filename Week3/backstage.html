@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>week3</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./all.scss" />
+    <link rel="stylesheet" href="../css/all.min.css" />
   </head>
   <body>
     <div id="app">
@@ -31,8 +31,8 @@
                 <th scope="col" class="fw-bold">編輯</th>
               </tr>
             </thead>
-            <tbody v-for="item in products" :key="item.id">
-              <tr>
+            <tbody>
+              <tr v-for="item in products" :key="item.id">
                 <td>{{item.category}}</td>
                 <td>{{item.title}}</td>
                 <td>{{item.origin_price}}</td>
@@ -86,7 +86,7 @@
                       placeholder="請輸入圖片連結"
                       v-model="tempProduct.imageUrl"
                     />
-                    <img :src="tempProduct.imageUrl" class="img-fluid"/>
+                    <img :src="tempProduct.imageUrl"/>
                   </div>
                   <div class="h5 fw-bold mb-3">多圖新增</div>
                   <!-- 當新增modal時若「未新增更多圖片」imagesUrl為空陣列時，post後的imagesUrl為undefined，因此下方新增欄位則不顯示 -->
@@ -100,7 +100,7 @@
                         placeholder="請輸入圖片連結"
                         v-model="tempProduct.imagesUrl[key]"
                       />
-                      <img :src="pic" class="img-fluid"/>
+                      <img :src="pic"/>
                     </div>
                     <!-- 
                       判斷條件：當「無更多相片」或「最後一個內容有值」出現新增按鈕
