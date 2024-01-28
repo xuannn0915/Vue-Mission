@@ -1,0 +1,35 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.h1,
+.h2,
+.h3,
+span,
+ul,
+li,
+ol,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+}
+
+table {
+  td{
+    &:nth-child(n + 3) {
+      width: 120px;
+    }
+    &:nth-child(6){
+      width: 200px;
+    }
+  }
+
+}
