@@ -1,10 +1,9 @@
 // 產品資料格式
 const url = "https://ec-course-api.hexschool.io/v2";
 const api_path = "xuan02";
-let productModal = "";
-let deleteModal="";
-
-const app = {
+let productModal =  "";
+let deleteModal= "";
+const app = Vue.createApp({
   // 資料
   data() {
     return {
@@ -124,12 +123,22 @@ const app = {
     axios.defaults.headers.common["Authorization"] = token;
 
     // modal初始化才能抓到dom元素
-    productModal = new bootstrap.Modal(document.getElementById("addModal"));
+    productModal = new bootstrap.Modal(document.getElementById("add"));
+    productModal.show();
     deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 
+    console.log(this.$refs.addModal);
     // 確認身份
     this.checkUser();
   },
-};
+});
 
-Vue.createApp(app).mount("#app");
+app.component('pagination',{
+  template:'#pagination',
+});
+
+app.component('add', {
+  template:'#addModal'
+});
+
+app.mount("#app");
