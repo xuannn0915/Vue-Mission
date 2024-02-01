@@ -1,14 +1,19 @@
 // 產品資料格式
 const url = "https://ec-course-api.hexschool.io/v2";
 const api_path = "xuan02";
-let productModal =  "";
-let deleteModal= "";
-const app = Vue.createApp({
+
+import pagination from "./pagination.js";
+import productModal from "./productModal.js";
+import deleteModal from "./deleteModal.js";
+
+
+const app = {
   // 資料
   data() {
     return {
       products: [],
       isNew: false,
+      pages:{},
       tempProduct: {
         imagesUrl: [],
       },
@@ -31,11 +36,12 @@ const app = Vue.createApp({
     },
 
     // 渲染列表
-    renderProducts() {
+    renderProducts(page=1) { //參數預設值
       axios
-        .get(`${url}/api/${api_path}/admin/products`)
+        .get(`${url}/api/${api_path}/admin/products?page=${page}`)
         .then((res) => {
           this.products = res.data.products;
+          this.pages = res.data.pagination;
         })
         .catch((err) => {
           console.log(err.response);
@@ -50,14 +56,14 @@ const app = Vue.createApp({
           imagesUrl: [],
         };
         this.isNew = true;
-        productModal.show();
+        this.$refs.addModal.openModal()
       } else if (status == "edit") {
         this.tempProduct = { ...item };
         this.isNew = false;
-        productModal.show();
+        this.$refs.addModal.openModal()
       } else if (status == "delete") {
         this.tempProduct = { ...item };
-        deleteModal.show();
+        this.$refs.delModal.openModal();
       }
     },
 
@@ -71,7 +77,7 @@ const app = Vue.createApp({
           .then((res) => {
             alert(res.data.message);
             this.renderProducts();
-            productModal.hide();
+            this.$refs.addModal.closeModal();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -83,7 +89,7 @@ const app = Vue.createApp({
           })
           .then((res) => {
             alert(res.data.message);
-            productModal.hide();
+            this.$refs.addModal.closeModal();
             this.renderProducts();
           })
           .catch((err) => {
@@ -93,24 +99,31 @@ const app = Vue.createApp({
     },
 
     // 刪除
-    delProduct(){
-        axios
-          .delete(`${url}/api/${api_path}/admin/product/${this.tempProduct.id}`)
-          .then((res) => {
-            alert(res.data.message);
-            deleteModal.hide();
-            this.renderProducts();
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+    delProduct() {
+      axios
+        .delete(`${url}/api/${api_path}/admin/product/${this.tempProduct.id}`)
+        .then((res) => {
+          alert(res.data.message);
+          this.$refs.delModal.closeModal();
+          this.renderProducts();
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     },
 
     // 新增更多圖片
-    createImages(){
-      this.tempProduct.imagesUrl=[];
-      this.tempProduct.imagesUrl.push('')
-    }
+    createImages() {
+      this.tempProduct.imagesUrl = [];
+      this.tempProduct.imagesUrl.push("");
+    },
+  },
+
+  // 區域註冊
+  components:{
+    pagination,
+    productModal,
+    deleteModal,
   },
 
   // 初始化
@@ -122,23 +135,9 @@ const app = Vue.createApp({
     );
     axios.defaults.headers.common["Authorization"] = token;
 
-    // modal初始化才能抓到dom元素
-    productModal = new bootstrap.Modal(document.getElementById("add"));
-    productModal.show();
-    deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-
-    console.log(this.$refs.addModal);
     // 確認身份
     this.checkUser();
   },
-});
+};
 
-app.component('pagination',{
-  template:'#pagination',
-});
-
-app.component('add', {
-  template:'#addModal'
-});
-
-app.mount("#app");
+Vue.createApp(app).mount("#app");
