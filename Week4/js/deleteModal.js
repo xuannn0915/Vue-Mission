@@ -1,5 +1,5 @@
 export default{
-  props:['tempProduct','delProduct'],
+  props:['tempProduct'],
   data() {
     return {
       deleteModal: null,
@@ -11,7 +11,10 @@ export default{
     },
     closeModal(){
       this.deleteModal.hide()
-    }
+    },
+    delItem(){
+      this.$emit('del', this.tempProduct.id)
+    },
   },
   template:`
   <div class="modal fade" tabindex="-1" id="deleteModal"
@@ -29,7 +32,7 @@ export default{
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
+          <button type="button" class="btn btn-danger" @click="delItem">確認刪除</button>
         </div>
       </div>
     </div>

@@ -99,9 +99,9 @@ const app = {
     },
 
     // 刪除
-    delProduct() {
+    delProduct(id) {
       axios
-        .delete(`${url}/api/${api_path}/admin/product/${this.tempProduct.id}`)
+        .delete(`${url}/api/${api_path}/admin/product/${id}`)
         .then((res) => {
           alert(res.data.message);
           this.$refs.delModal.closeModal();
