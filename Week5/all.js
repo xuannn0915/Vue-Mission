@@ -1,48 +1,41 @@
 const api_path = "xuan02";
 const url = "https://ec-course-api.hexschool.io/v2";
 
-import pagination from "./pagination.js";
+import pagination from "./component/pagination.js";
+import modalComponent from "./component/modalComponent.js";
+// import productStore from "./store/productStore.js";
 
 const app = Vue.createApp({
   data() {
     return {
-      productList:[],
+      productList: [],
+      pagesInfo: {},
+      tempProduct:{}
     };
   },
   methods: {
-    checkUser() {
+    renderProductList(num) {
       axios
-        .post(`${url}/api/user/check`)
+        .get(`${url}/api/${api_path}/products?page=${num}`)
         .then((res) => {
-          this.renderProductList();
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-          window.location = "index.html";
-        });
-    },
-    renderProductList() {
-      axios
-        .get(`${url}/api/${api_path}/admin/products`)
-        .then((res) => {
-          console.log(res.data);
-          this.productList = res.data.products
+          this.pagesInfo = res.data.pagination;
+          this.productList = res.data.products;
         })
         .catch((err) => {
           console.log(err.response);
         });
     },
+    showProductModal(item){
+      this.tempProduct = item
+      this.$refs.productModal.openModal();
+    }
   },
-  components:{
+  components: {
     pagination,
+    modalComponent,
   },
   mounted() {
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)xuanToken\s*\=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    axios.defaults.headers.common["Authorization"] = token;
-    this.checkUser();
+    this.renderProductList(1);
   },
 });
 

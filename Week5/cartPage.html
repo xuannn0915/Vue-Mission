@@ -24,24 +24,33 @@
             <tbody>
               <tr v-for="product in productList" :key="product.id">
                 <td style="width: 200px">
-                  <img :src="product.imageUrl" alt="" style="
+                  <div
+                  style="
                   height: 100px;
                   background-size: cover;
-                  background-position: center;
-                ">
+                  background-position: center;"
+                  :style="{backgroundImage:`url(${product.imageUrl})`}">
+                  </div>
                 </td>
                 <td>{{product.title}}</td>
                 <td>
-                  <del class="h6 text-secondary">原價 {{product.origin_price}} 元</del>
-                  <div class="h5">現在只要
-                    <span class="text-danger">
+                  <div class="h5" v-if="product.origin_price===product.price">
                     {{ product.price}} 
-                    </span> 
                   元</div>
+                  <div>
+                    <del class="h6 text-secondary">原價 {{product.origin_price}} 元</del>
+                    <div class="h5">
+                      現在只要
+                      <span class="text-danger">
+                      {{ product.price}} 
+                      </span> 
+                      元
+                    </div>
+                  </div>
                 </td>
                 <td>
                   <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-outline-secondary">
+                    <button type="button" class="btn btn-outline-secondary" @click="showProductModal(product)">
                       <i class="fas fa-spinner fa-pulse"></i>
                       查看更多
                     </button>
@@ -54,7 +63,10 @@
               </tr>
             </tbody>
           </table>
-          <pagination></pagination>
+          <pagination :pages="pagesInfo" @choose-page="renderProductList"></pagination>
+
+          <!-- Modal -->
+          <modal-Component :modal-content="tempProduct" ref="productModal"></modal-Component>
 
           <!-- 購物車列表 -->
           <!-- <div class="text-end">
@@ -198,6 +210,7 @@
           </v-form>
         </div> -->
 
+
       </div>
     </div>
     
@@ -207,7 +220,7 @@
     
     <!-- Bootstrap Js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    
+
     <!-- Vue -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
     
