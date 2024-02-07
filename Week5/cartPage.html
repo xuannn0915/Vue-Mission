@@ -54,7 +54,7 @@
                       <i class="fas fa-spinner fa-pulse"></i>
                       查看更多
                     </button>
-                    <button type="button" class="btn btn-outline-danger">
+                    <button type="button" class="btn btn-outline-danger" @click="addProduct(product.id, qty=1)">
                       <i class="fas fa-spinner fa-pulse"></i>
                       加到購物車
                     </button>
@@ -69,7 +69,7 @@
           <modal-Component :modal-content="tempProduct" ref="productModal"></modal-Component>
 
           <!-- 購物車列表 -->
-          <!-- <div class="text-end">
+          <div class="text-end">
             <button class="btn btn-outline-danger" type="button">
               清空購物車
             </button>
@@ -84,8 +84,8 @@
               </tr>
             </thead>
             <tbody>
-              <template v-if="cart.carts">
-                <tr>
+              <template v-if="cartList.length">
+                <tr v-for="item in cartList" :key="item.id">
                   <td>
                     <button type="button" class="btn btn-outline-danger btn-sm">
                       <i class="fas fa-spinner fa-pulse"></i>
@@ -93,7 +93,7 @@
                     </button>
                   </td>
                   <td>
-                    {{ }}
+                    {{ item.product.title }}
                     <div class="text-success">已套用優惠券</div>
                   </td>
                   <td>
@@ -101,14 +101,21 @@
                       <div class="input-group mb-3">
                         <input min="1" type="number" class="form-control" />
                         <span class="input-group-text" id="basic-addon2"
-                          >{{ }}</span
+                          >{{ item.qty }}</span
                         >
                       </div>
                     </div>
                   </td>
                   <td class="text-end">
                     <small class="text-success">折扣價：</small>
-                    {{ }}
+                    {{ item.total }}
+                  </td>
+                </tr>
+              </template>
+              <template  v-else>
+                <tr>
+                  <td colspan="4" class="border-0 text-center text-secondary">
+                    尚無商品加入購物車
                   </td>
                 </tr>
               </template>
@@ -124,7 +131,7 @@
               </tr>
             </tfoot>
           </table>
-        </div> -->
+        </div>
 
         <!-- 表單驗證 -->
         <!-- <div class="my-5 row justify-content-center">

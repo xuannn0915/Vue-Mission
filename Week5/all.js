@@ -9,6 +9,7 @@ const app = Vue.createApp({
   data() {
     return {
       productList: [],
+      cartList:[],
       pagesInfo: {},
       tempProduct:{}
     };
@@ -28,6 +29,31 @@ const app = Vue.createApp({
     showProductModal(item){
       this.tempProduct = item
       this.$refs.productModal.openModal();
+    },
+    addProduct(product_id, qty){
+      const item = {
+        "data": {
+          product_id,
+          qty
+        }
+      }
+      axios.post(`${url}/api/${api_path}/cart`,item)
+      .then(res=>{
+        alert(res.data.message)
+        this.renderCartList();
+      })
+      .catch(err=>{
+        console.log(err.response.data.message);
+      })
+    },
+    renderCartList(){
+      axios.get(`${url}/api/${api_path}/cart`)
+      .then(res=>{
+        this.cartList = res.data.data.carts
+      })
+      .catch(err=>{
+        console.log(err.response);
+      })
     }
   },
   components: {
