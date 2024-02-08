@@ -14,10 +14,11 @@ export default {
   <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
-        <div class="modal-header bg-dark text-white">
-          <h5 class="modal-title" id="exampleModalLabel">
+        <div class="modal-header bg-light text-white">
+          <h5 class="modal-title text-dark" id="exampleModalLabel">
             <span>{{modalContent.title}}</span>
           </h5>
+          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -33,7 +34,7 @@ export default {
               <div class="h5">現在只要{{modalContent.price}} 元</div>
               <div>
                 <div class="input-group">
-                  <input type="number" class="form-control" min="1">
+                  <input type="number" class="form-control" min="1" value="1">
                   <button type="button" class="btn btn-primary">加入購物車</button>
                 </div>
               </div>
