@@ -9,13 +9,13 @@ const app = Vue.createApp({
   data() {
     return {
       productList: [],
-      cartList:[],
+      cartList: [],
       pagesInfo: {},
-      tempProduct:{},
-      cartTotal:0,
-      status:{
-        addCartLoading:''
-      }
+      tempProduct: {},
+      cartTotal: 0,
+      status: {
+        addCartLoading: "",
+      },
     };
   },
   methods: {
@@ -30,53 +30,73 @@ const app = Vue.createApp({
           console.log(err.response);
         });
     },
-    showProductModal(item){
-      this.tempProduct = item
+    showProductModal(item) {
+      this.tempProduct = item;
       this.$refs.productModal.openModal();
     },
-    addProduct(product_id, qty=1){
+    addProduct(product_id, qty = 1) {
       const item = {
-          product_id,
-          qty
-      }
-      this.status.addCartLoading = product_id
-      axios.post(`${url}/api/${api_path}/cart`,{data:item})
-      .then(res=>{
-        this.status.addCartLoading = '';
+        product_id,
+        qty,
+      };
+      this.status.addCartLoading = product_id;
+      axios
+        .post(`${url}/api/${api_path}/cart`, { data: item })
+        .then((res) => {
+          this.status.addCartLoading = "";
+          alert(res.data.message);
+          this.renderCartList();
+          this.$refs.productModal.closeModal();
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
+    },
+    renderCartList() {
+      axios
+        .get(`${url}/api/${api_path}/cart`)
+        .then((res) => {
+          this.cartList = res.data.data.carts;
+          this.cartTotal = res.data.data.final_total;
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    changeCartNum(product, qty = 1) {
+      const item = {
+        product_id:product.product_id,
+        qty,
+      };
+      axios
+        .put(`${url}/api/${api_path}/cart/${product.id}`, {
+          data: item, 
+        })
+        .then((res) => {
+          alert(res.data.message);
+          this.renderCartList()
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    deleteAll() {
+      axios
+        .delete(`${url}/api/${api_path}/carts`)
+        .then((res) => {
+          alert(res.data.message);
+          this.renderCartList();
+        })
+        .catch((err) => {
+          console.log(err.response.message);
+        });
+    },
+    deleteProduct(id) {
+      axios.delete(`${url}/api/${api_path}/cart/${id}`).then((res) => {
         alert(res.data.message);
         this.renderCartList();
-      })
-      .catch(err=>{
-        console.log(err.response.data.message);
-      })
+      });
     },
-    renderCartList(){
-      axios.get(`${url}/api/${api_path}/cart`)
-      .then(res=>{
-        this.cartList = res.data.data.carts
-        this.cartTotal = res.data.data.final_total
-      })
-      .catch(err=>{
-        console.log(err.response);
-      })
-    },
-    deleteAll(){
-      axios.delete(`${url}/api/${api_path}/carts`)
-      .then(res=>{
-        alert(res.data.message)
-        this.renderCartList()
-      })
-      .catch(err=>{
-        console.log(err.response.message);
-      })
-    },
-    deleteProduct(id){
-      axios.delete(`${url}/api/${api_path}/cart/${id}`)
-      .then(res=>{
-        alert(res.data.message);
-        this.renderCartList();
-      })
-    }
   },
   components: {
     pagination,
@@ -84,6 +104,7 @@ const app = Vue.createApp({
   },
   mounted() {
     this.renderProductList(1);
+    this.renderCartList();
   },
 });
 

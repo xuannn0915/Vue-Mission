@@ -2,13 +2,22 @@ export default {
   data() {
     return {
       modal: null,
+      qty:1,
     };
   },
-  props: ["modalContent"],
+  props: ["modalContent", "addToCart","status"],
   methods: {
     openModal() {
       this.modal.show();
     },
+    closeModal(){
+      this.modal.hide();
+    }
+  },
+  watch:{
+    modalContent(){
+      this.qty=1;
+    }
   },
   template: `
   <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
@@ -34,8 +43,12 @@ export default {
               <div class="h5">現在只要{{modalContent.price}} 元</div>
               <div>
                 <div class="input-group">
-                  <input type="number" class="form-control" min="1" value="1">
-                  <button type="button" class="btn btn-primary">加入購物車</button>
+                  <select class="form-select" aria-label="Default select example" v-model="qty">
+                    <option :value="i" v-for="i in 20" :key="i">{{i}}</option>
+                  </select>
+                  <button type="button" class="btn btn-primary" @click="addToCart(modalContent.id, qty)" :disabled="status === modalContent.id">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="status === modalContent.id"></span>
+                  加入購物車</button>
                 </div>
               </div>
             </div>

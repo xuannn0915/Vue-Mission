@@ -66,7 +66,7 @@
           <pagination :pages="pagesInfo" @choose-page="renderProductList"></pagination>
 
           <!-- Modal -->
-          <modal-Component :modal-content="tempProduct" ref="productModal"></modal-Component>
+          <modal-Component :modal-content="tempProduct" ref="productModal" :add-to-cart="addProduct" :status="status.addCartLoading"></modal-Component>
 
           <!-- 購物車列表 -->
           <div class="text-end">
@@ -99,7 +99,7 @@
                   <td>
                     <div class="input-group input-group-sm">
                       <div class="input-group mb-3">
-                        <input min="1" type="number" class="form-control" :value="item.qty"/>
+                        <input min="1" type="number" class="form-control" :value="item.qty" @change="changeCartNum(item, item.qty)" v-model="item.qty">
                         <span class="input-group-text" id="basic-addon2"
                           >{{ item.product.unit }}</span
                         >
