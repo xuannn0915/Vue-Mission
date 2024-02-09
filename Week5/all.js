@@ -114,6 +114,17 @@ const app = Vue.createApp({
         .post(`${url}/api/${api_path}/order`, { data: this.userInfo })
         .then((res) => {
           alert(res.data.message);
+          this.cartList=[];
+          this.cartTotal= 0;
+          this.userInfo= {
+            user: {
+              name: "",
+              email: "",
+              tel: "",
+              address: "",
+            },
+            message: "",
+          };
         })
         .catch((err) => {
           alert(err.response.data.message);
