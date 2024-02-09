@@ -3,7 +3,6 @@ const url = "https://ec-course-api.hexschool.io/v2";
 
 import pagination from "./component/pagination.js";
 import modalComponent from "./component/modalComponent.js";
-// import productStore from "./store/productStore.js";
 
 const app = Vue.createApp({
   data() {
@@ -15,6 +14,15 @@ const app = Vue.createApp({
       cartTotal: 0,
       status: {
         addCartLoading: "",
+      },
+      userInfo: {
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: "",
+        },
+        message: "",
       },
     };
   },
@@ -65,16 +73,16 @@ const app = Vue.createApp({
     },
     changeCartNum(product, qty = 1) {
       const item = {
-        product_id:product.product_id,
+        product_id: product.product_id,
         qty,
       };
       axios
         .put(`${url}/api/${api_path}/cart/${product.id}`, {
-          data: item, 
+          data: item,
         })
         .then((res) => {
           alert(res.data.message);
-          this.renderCartList()
+          this.renderCartList();
         })
         .catch((err) => {
           console.log(err.response);
@@ -97,6 +105,20 @@ const app = Vue.createApp({
         this.renderCartList();
       });
     },
+    isPhone(value) {
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : "需要正確的電話號碼";
+    },
+    sendForm() {
+      axios
+        .post(`${url}/api/${api_path}/order`, { data: this.userInfo })
+        .then((res) => {
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    },
   },
   components: {
     pagination,
@@ -107,5 +129,24 @@ const app = Vue.createApp({
     this.renderCartList();
   },
 });
+
+Object.keys(VeeValidateRules).forEach((rule) => {
+  if (rule !== "default") {
+    VeeValidate.defineRule(rule, VeeValidateRules[rule]);
+  }
+});
+
+// 讀取外部的資源
+VeeValidateI18n.loadLocaleFromURL("./zh_TW.json");
+
+// Activate the locale
+VeeValidate.configure({
+  generateMessage: VeeValidateI18n.localize("zh_TW"),
+  validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
+});
+
+app.component("VForm", VeeValidate.Form);
+app.component("VField", VeeValidate.Field);
+app.component("ErrorMessage", VeeValidate.ErrorMessage);
 
 app.mount("#app");

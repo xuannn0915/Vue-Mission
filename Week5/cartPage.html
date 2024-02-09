@@ -134,8 +134,8 @@
         </div>
 
         <!-- 表單驗證 -->
-        <!-- <div class="my-5 row justify-content-center">
-          <v-form ref="form" class="col-md-6" v-slot="{ errors }">
+        <div class="my-5 row justify-content-center">
+          <v-form ref="form" class="col-md-6" v-slot="{ errors }" >
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <v-field
@@ -144,7 +144,8 @@
                 type="email"
                 class="form-control"
                 :class="{ 'is-invalid': errors['email'] }"
-                placeholder="請輸入 Email"
+                placeholder="請輸入 Email" rules="email|required"
+                v-model="userInfo.user.email"
               ></v-field>
               <error-message
                 name="email"
@@ -156,15 +157,16 @@
               <label for="name" class="form-label">收件人姓名</label>
               <v-field
                 id="name"
-                name="姓名"
+                name="name"
                 type="text"
                 class="form-control"
-                :class="{ 'is-invalid': errors['姓名'] }"
                 placeholder="請輸入姓名"
+                :class="{ 'is-invalid': errors['name'] }"
                 rules="required"
+                v-model="userInfo.user.name"
               ></v-field>
               <error-message
-                name="姓名"
+                name="name"
                 class="invalid-feedback"
               ></error-message>
             </div>
@@ -173,14 +175,16 @@
               <label for="tel" class="form-label">收件人電話</label>
               <v-field
                 id="tel"
-                name="電話"
+                name="tel"
                 type="text"
                 class="form-control"
-                :class="{ 'is-invalid': errors['電話'] }"
                 placeholder="請輸入電話"
+                :class="{ 'is-invalid': errors['tel'] }"
+                :rules="required|isPhone"
+                v-model="userInfo.user.tel"
               ></v-field>
               <error-message
-                name="電話"
+                name="tel"
                 class="invalid-feedback"
               ></error-message>
             </div>
@@ -189,15 +193,16 @@
               <label for="address" class="form-label">收件人地址</label>
               <v-field
                 id="address"
-                name="地址"
+                name="address"
                 type="text"
                 class="form-control"
-                :class="{ 'is-invalid': errors['地址'] }"
                 placeholder="請輸入地址"
+                :class="{ 'is-invalid': errors['address'] }"
                 rules="required"
+                v-model="userInfo.user.address"
               ></v-field>
               <error-message
-                name="地址"
+                name="address"
                 class="invalid-feedback"
               ></error-message>
             </div>
@@ -209,13 +214,14 @@
                 class="form-control"
                 cols="30"
                 rows="10"
+                v-model="userInfo.message"
               ></textarea>
             </div>
             <div class="text-end">
-              <button type="submit" class="btn btn-danger">送出訂單</button>
+              <button type="submit" class="btn btn-danger" @click.prevent="sendForm" :disabled="userInfo.user.name =='' | userInfo.user.email ==''| userInfo.user.tel =='' | userInfo.user.address ==''">送出訂單</button>
             </div>
-          </v-form>
-        </div> -->
+          </ㄒform>
+        </div>
 
 
       </div>
@@ -233,9 +239,9 @@
     
     
     <!-- Vee Validate套件 -->
-    <script src="https://unpkg.com/vee-validate@next"></script>
-    <script src="https://unpkg.com/@vee-validate/i18n@4.1.0"></script>
-    <script src="https://unpkg.com/@vee-validate/rules"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.1.17/vee-validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.1.17/dist/vee-validate-i18n.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.1.17/dist/vee-validate-rules.min.js"></script>
     
     <!-- 本機JS -->
     <script src="./all.js" type="module"></script>
