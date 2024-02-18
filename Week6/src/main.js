@@ -7,6 +7,7 @@ import LoadingOverlay from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+// import bootstrap from 'bootstrap';
 
 // 內部引入SRC
 import App from './App.vue';
@@ -19,5 +20,6 @@ app.use(createPinia());
 app.use(router);
 app.component('LoadingComponent', LoadingOverlay);
 app.use(VueAxios, axios);
+// app.use(bootstrap);
 
 app.mount('#app');

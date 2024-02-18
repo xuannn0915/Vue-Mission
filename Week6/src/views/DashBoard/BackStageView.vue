@@ -12,3 +12,10 @@
     </nav>
     <router-view></router-view>
 </template>
+
+<style>
+.active{
+    color: green;
+    font-weight: 500;
+}
+</style>
