@@ -3,7 +3,7 @@
   <nav class='d-flex align-items-center justify-content-center'>
     <router-link to='/admin/product' class='px-3'>後台產品列表</router-link>|
     <router-link to='/admin/order' class='px-3'>後台訂單</router-link>
-    <router-link to='/'>
+    <router-link to='/home'>
       <a href='#' class='btn btn-outline-secondary'> 回前台 </a>
     </router-link>
   </nav>
