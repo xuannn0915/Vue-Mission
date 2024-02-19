@@ -55,7 +55,9 @@
                     v-model="item.qty"
                     @change="changeCartNum(item, item.qty)"
                   />
-                  <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
+                  <span class="input-group-text" id="basic-addon2">{{
+                    item.product.unit
+                  }}</span>
                 </div>
               </div>
             </td>
@@ -67,7 +69,9 @@
         </template>
         <template v-else>
           <tr>
-            <td colspan="4" class="border-0 text-center text-secondary">尚無商品加入購物車</td>
+            <td colspan="4" class="border-0 text-center text-secondary">
+              尚無商品加入購物車
+            </td>
           </tr>
         </template>
       </tbody>
@@ -82,9 +86,104 @@
                 </tr> -->
       </tfoot>
     </table>
+
+    <!-- 表單驗證 -->
+    <div class="my-5 row justify-content-center">
+      <VForm ref="form" class="col-md-6" v-slot="{ errors }">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <VField
+            id="email"
+            name="email"
+            type="email"
+            class="form-control"
+            :class="{ 'is-invalid': errors['email'] }"
+            placeholder="請輸入 Email"
+            rules="email|required"
+            v-model="userInfo.user.email"
+          ></VField>
+          <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">收件人姓名</label>
+          <VField
+            id="name"
+            name="name"
+            type="text"
+            class="form-control"
+            placeholder="請輸入姓名"
+            :class="{ 'is-invalid': errors['name'] }"
+            rules="required"
+            v-model="userInfo.user.name"
+          ></VField>
+          <ErrorMessage name="name" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="tel" class="form-label">收件人電話</label>
+          <VField
+            id="tel"
+            name="tel"
+            type="text"
+            class="form-control"
+            placeholder="請輸入電話"
+            :class="{ 'is-invalid': errors['tel'] }"
+            rules="required"
+            v-model="userInfo.user.tel"
+          ></VField>
+          <ErrorMessage name="tel" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">收件人地址</label>
+          <VField
+            id="address"
+            name="address"
+            type="text"
+            class="form-control"
+            placeholder="請輸入地址"
+            :class="{ 'is-invalid': errors['address'] }"
+            rules="required"
+            v-model="userInfo.user.address"
+          ></VField>
+          <ErrorMessage name="address" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">留言</label>
+          <textarea
+            id="message"
+            class="form-control"
+            cols="30"
+            rows="10"
+            v-model="userInfo.message"
+          ></textarea>
+        </div>
+        <div class="text-end">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            @click.prevent="sendForm"
+            :disabled="
+              userInfo.user.name == '' ||
+              userInfo.user.email == '' ||
+              userInfo.user.tel == '' ||
+              userInfo.user.address == ''
+            "
+          >
+            送出訂單
+          </button>
+        </div>
+      </VForm>
+    </div>
   </main>
 
-  <DeleteModal :del-product="delProduct" @del="deleteProduct" ref="deleteModal"></DeleteModal>
+  <DeleteModal
+    :del-product="delProduct"
+    @del="deleteProduct"
+    ref="deleteModal"
+  ></DeleteModal>
 </template>
 
 <script>
@@ -101,6 +200,15 @@ export default {
       status: {
         deleteLoading: false,
         isLoading: true,
+      },
+      userInfo: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+        message: '',
       },
     };
   },
@@ -152,11 +260,34 @@ export default {
       this.$refs.deleteModal.openModal();
     },
     deleteProduct(id) {
-      this.$http.delete(`${VITE_URL}/v2/api/${VITE_PATH}/cart/${id}`).then((res) => {
-        alert(res.data.message);
-        this.$refs.deleteModal.closeModal();
-        this.renderCartList();
-      });
+      this.$http
+        .delete(`${VITE_URL}/v2/api/${VITE_PATH}/cart/${id}`)
+        .then((res) => {
+          alert(res.data.message);
+          this.$refs.deleteModal.closeModal();
+          this.renderCartList();
+        });
+    },
+    sendForm() {
+      this.$http
+        .post(`${VITE_URL}/v2/api/${VITE_PATH}/order`, { data: this.userInfo })
+        .then((res) => {
+          alert(res.data.message);
+          this.cartList = [];
+          this.cartTotal = 0;
+          this.userInfo = {
+            user: {
+              name: '',
+              email: '',
+              tel: '',
+              address: '',
+            },
+            message: '',
+          };
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
     },
   },
   components: {
