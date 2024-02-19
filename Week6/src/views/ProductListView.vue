@@ -1,9 +1,9 @@
 <template>
-  <main class='p-4'>
+  <main class="p-4">
     <h2>這是產品列表頁</h2>
-    <LoadingComponent :active='status.isLoading' />
+    <LoadingComponent :active="status.isLoading" />
     <!-- 商品列表 -->
-    <table class='table align-middle'>
+    <table class="table align-middle">
       <thead>
         <tr>
           <th>圖片</th>
@@ -13,29 +13,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for='product in productList' :key='product.id'>
-          <td style='inline-size: 200px'>
+        <tr v-for="product in productList" :key="product.id">
+          <td style="inline-size: 200px">
             <div
-              style='
-                block-size: 100px;
-                background-size: cover;
-                background-position: center;
-              '
-              :style='{ backgroundImage: `url(${product.imageUrl})` }'
+              style="block-size: 100px; background-size: cover; background-position: center"
+              :style="{ backgroundImage: `url(${product.imageUrl})` }"
             ></div>
           </td>
           <td>{{ product.title }}</td>
           <td>
-            <div class='h5' v-if='product.origin_price === product.price'>
+            <div class="h5" v-if="product.origin_price === product.price">
               {{ product.price }} 元
             </div>
             <div>
-              <del class='h6 text-secondary'
-                >原價 {{ product.origin_price }} 元</del
-              >
-              <div class='h5'>
+              <del class="h6 text-secondary">原價 {{ product.origin_price }} 元</del>
+              <div class="h5">
                 現在只要
-                <span class='text-danger'>
+                <span class="text-danger">
                   {{ product.price }}
                 </span>
                 元
@@ -43,26 +37,26 @@
             </div>
           </td>
           <td>
-            <div class='btn-group btn-group-sm'>
+            <div class="btn-group btn-group-sm">
               <button
-                type='button'
-                class='btn btn-outline-secondary'
-                @click='showProductModal(product)'
+                type="button"
+                class="btn btn-outline-secondary"
+                @click="showProductModal(product)"
               >
-                <i class='fas fa-spinner fa-pulse'></i>
+                <i class="fas fa-spinner fa-pulse"></i>
                 查看更多
               </button>
               <button
-                type='button'
-                class='btn btn-outline-danger'
-                @click='addProduct(product.id)'
-                :disabled='status.addCartLoading === product.id'
+                type="button"
+                class="btn btn-outline-danger"
+                @click="addProduct(product.id)"
+                :disabled="status.addCartLoading === product.id"
               >
                 <span
-                  class='spinner-border spinner-border-sm'
-                  role='status'
-                  aria-hidden='true'
-                  v-if='status.addCartLoading === product.id'
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  v-if="status.addCartLoading === product.id"
                 ></span>
                 加到購物車
               </button>
@@ -71,17 +65,14 @@
         </tr>
       </tbody>
     </table>
-    <PaginationComponent
-      :pages='pagesInfo'
-      @choose-page='renderProductList'
-    ></PaginationComponent>
+    <PaginationComponent :pages="pagesInfo" @choose-page="renderProductList"></PaginationComponent>
   </main>
 
   <productModal
-    :modal-content='tempProduct'
-    ref='productModal'
-    :add-to-cart='addProduct'
-    :status='status.addCartLoading'
+    :modal-content="tempProduct"
+    ref="productModal"
+    :add-to-cart="addProduct"
+    :status="status.addCartLoading"
   ></productModal>
 </template>
 

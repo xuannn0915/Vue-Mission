@@ -1,33 +1,31 @@
 <!-- eslint-disable max-len -->
 <template>
-  <div class='container pt-5'>
-    <div class='row'>
-      <div class='col-3 mx-auto'>
-        <h1 class='fw-bold h2 mb-4 text-center'>請先登入</h1>
-        <form action='#'>
-          <div class='form-floating mb-3'>
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-3 mx-auto">
+        <h1 class="fw-bold h2 mb-4 text-center">請先登入</h1>
+        <form action="#">
+          <div class="form-floating mb-3">
             <input
-              type='email'
-              class='form-control'
-              id='floatingInput'
-              placeholder='name@example.com'
-              v-model='username'
+              type="email"
+              class="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              v-model="username"
             />
-            <label for='floatingInput'>Email address</label>
+            <label for="floatingInput">Email address</label>
           </div>
-          <div class='form-floating mb-3'>
+          <div class="form-floating mb-3">
             <input
-              type='password'
-              class='form-control'
-              id='floatingPassword'
-              placeholder='Password'
-              v-model='password'
+              type="password"
+              class="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+              v-model="password"
             />
-            <label for='floatingPassword'>Password</label>
+            <label for="floatingPassword">Password</label>
           </div>
-          <button type='button' class='btn btn-primary w-100' @click='login'>
-            登入
-          </button>
+          <button type="button" class="btn btn-primary w-100" @click="login">登入</button>
         </form>
       </div>
     </div>
