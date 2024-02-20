@@ -61,7 +61,7 @@ export default {
           const { expired, token } = res.data;
           document.cookie = `xuanToken = ${token}; expires = ${new Date(expired)}`;
           alert(res.data.message);
-          this.$router.push('/admin/product');
+          this.$router.push('./admin/product');
         })
         .catch((err) => {
           if (this.username === '' || this.password === '') {

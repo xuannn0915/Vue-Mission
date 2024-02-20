@@ -34,7 +34,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
-                @click="showDelModal(item)"
+                @click="deleteProduct(item.id)"
               >
                 <i class="fas fa-spinner fa-pulse"></i>
                 x
@@ -89,16 +89,9 @@
   </main>
 
   <FormComponent></FormComponent>
-
-  <DeleteModal
-    :del-product="delProduct"
-    @del="deleteProduct"
-    ref="deleteModal"
-  ></DeleteModal>
 </template>
 
 <script>
-import DeleteModal from '../components/DeleteModal.vue';
 import FormComponent from '../components/FormComponent.vue';
 
 const { VITE_URL, VITE_PATH } = import.meta.env;
@@ -158,22 +151,16 @@ export default {
           console.log(err.response.message);
         });
     },
-    showDelModal(item) {
-      this.delProduct = item;
-      this.$refs.deleteModal.openModal();
-    },
     deleteProduct(id) {
       this.$http
         .delete(`${VITE_URL}/v2/api/${VITE_PATH}/cart/${id}`)
         .then((res) => {
           alert(res.data.message);
-          this.$refs.deleteModal.closeModal();
           this.renderCartList();
         });
     },
   },
   components: {
-    DeleteModal,
     FormComponent,
   },
   mounted() {

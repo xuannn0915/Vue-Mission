@@ -14,7 +14,7 @@
         <div class="modal-body">
           <p>
             是否刪除
-            <strong class="text-danger"> {{ delTitle }} </strong>
+            <strong class="text-danger"> {{ delProduct.title }} </strong>
             商品(刪除後將無法恢復)。
           </p>
         </div>
@@ -37,8 +37,6 @@ export default {
   data() {
     return {
       deleteModal: null,
-      delTitle: '',
-      delId: '',
     };
   },
   methods: {
@@ -49,13 +47,7 @@ export default {
       this.deleteModal.hide();
     },
     delItem() {
-      this.$emit('del', this.delId);
-    },
-  },
-  watch: {
-    delProduct() {
-      this.delId = this.delProduct.id;
-      this.delTitle = this.delProduct.product.title;
+      this.$emit('del', this.delProduct.id);
     },
   },
   mounted() {

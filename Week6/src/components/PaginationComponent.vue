@@ -1,21 +1,21 @@
 <template>
-  <nav aria-label='Page navigation example'>
-    <ul class='pagination'>
-      <li class='page-item' :class='{ disabled: !pages.has_pre }'>
-        <a class='page-link' href='#'>＜</a>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" :class="{ disabled: !pages.has_pre }">
+        <a class="page-link" href="#" @click.prevent="choosePage(pages.current_page - 1)">＜</a>
       </li>
       <li
-        class='page-item'
-        v-for='page in pages.total_pages'
-        :key='page + 123'
-        :class='{ active: pages.current_page === page }'
+        class="page-item"
+        v-for="page in pages.total_pages"
+        :key="page + 123"
+        :class="{ active: pages.current_page === page }"
       >
-        <a class='page-link' href='#' @click.prevent='choosePage(page)'>{{
-          page
-        }}</a>
+        <a class="page-link" href="#" @click.prevent="choosePage(page)">{{ page }}</a>
       </li>
-      <li class='page-item' :class='{ disabled: !pages.has_next }'>
-        <a class='page-link' href='#'>＞</a>
+      <li class="page-item" :class="{ disabled: !pages.has_next }">
+        <a class="page-link" href="#" @click.prevent="choosePage(pages.current_page + 1)"
+          >＞</a
+        >
       </li>
     </ul>
   </nav>
