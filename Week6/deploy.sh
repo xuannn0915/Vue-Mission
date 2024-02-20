@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # 部署到 https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/xuannn0915/Vue-Mission.git master:gh-pages
+git push -f https://github.com/xuannn0915/Vue-Mission/Week6.git master:gh-pages
 
 cd -
