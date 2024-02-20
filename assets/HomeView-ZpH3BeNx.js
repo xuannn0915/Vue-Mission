@@ -1,0 +1,1 @@
+import{_ as e,o,c as s,a as c}from"./index-lCZ1nyxc.js";const t={},n={class:"p-4"},_=c("h2",null,"這是首頁",-1),a=[_];function r(i,d){return o(),s("main",n,a)}const f=e(t,[["render",r]]);export{f as default};
