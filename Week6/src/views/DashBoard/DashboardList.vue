@@ -54,7 +54,12 @@
   </div>
 
   <!-- Modal -->
-  <DashboardModal ref="dashboardModal" :temp-product="tempProduct"></DashboardModal>
+  <DashboardModal
+    ref="dashboardModal"
+    :temp-product="tempProduct"
+    :save-product="saveProduct"
+    :is-new="isNew"
+  ></DashboardModal>
   <DeleteModal :del-product="tempProduct" @del="delProduct" ref="deleteModal"></DeleteModal>
 </template>
 
@@ -126,7 +131,7 @@ export default {
           .then((res) => {
             alert(res.data.message);
             this.renderProducts();
-            this.$refs.addModal.closeModal();
+            this.$refs.dashboardModal.closeModal();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -138,7 +143,7 @@ export default {
           })
           .then((res) => {
             alert(res.data.message);
-            this.$refs.addModal.closeModal();
+            this.$refs.dashboardModal.closeModal();
             this.renderProducts();
           })
           .catch((err) => {

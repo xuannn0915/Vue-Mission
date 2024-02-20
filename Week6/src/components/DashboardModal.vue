@@ -186,7 +186,7 @@
 import { Modal } from 'bootstrap';
 
 export default {
-  props: ['tempProduct', 'saveProduct'],
+  props: ['tempProduct', 'saveProduct', 'isNew'],
   data() {
     return {
       productModal: null,
